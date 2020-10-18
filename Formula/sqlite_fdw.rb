@@ -6,13 +6,10 @@ class SqliteFdw < Formula
   license "MIT"
 
   depends_on "postgresql"
-  depends_on "sqlite"
+  uses_from_macos "sqlite"
 
   def install
-    mkdir "stage"
-    system "make", "install", "USE_PGXS=1", "DESTDIR=#{buildpath}/stage"
-    lib.install Dir["stage/#{HOMEBREW_PREFIX}/lib/*"]
-    share.install Dir["stage/#{HOMEBREW_PREFIX}/share/*"]
+    system "make", "install", "USE_PGXS=1", "DESTDIR=#{prefix}"
   end
 
   test do
