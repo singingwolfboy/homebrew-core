@@ -3,8 +3,8 @@ class Darglint < Formula
 
   desc "Python docstring argument linter"
   homepage "https://github.com/terrencepreilly/darglint"
-  url "https://github.com/terrencepreilly/darglint/archive/refs/tags/v1.8.0.tar.gz"
-  sha256 "7b38411663b2e5a4f8abbec7762e4e3c0d4550c2fbcbbfa37603b6b585644b60"
+  url "https://files.pythonhosted.org/packages/8d/1a/86f981066bc6f9d90d73da0ce09d2084abf1a0fafa9f28fb5130b7186da2/darglint-1.8.0.tar.gz"
+  sha256 "aa605ef47817a6d14797d32b390466edab621768ea4ca5cc0f3c54f6d8dcaec8"
   license "MIT"
   head "https://github.com/terrencepreilly/darglint.git"
 
