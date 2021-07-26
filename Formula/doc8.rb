@@ -6,7 +6,7 @@ class Doc8 < Formula
   url "https://files.pythonhosted.org/packages/f6/6d/d5f29393a900a4f8d0dec089fe3fb287434943ee7e4bbd803ec26c61c4c0/doc8-0.9.0.tar.gz"
   sha256 "380b660474be40ce88b5f04fa93470449124dbc850a0318f2ef186162bc1360b"
   license "Apache-2.0"
-  head "https://github.com/PyCQA/doc8.git"
+  head "https://github.com/PyCQA/doc8.git", branch: "main"
 
   depends_on "python@3.9"
 
