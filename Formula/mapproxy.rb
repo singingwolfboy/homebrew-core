@@ -32,6 +32,6 @@ class Mapproxy < Formula
 
   test do
     system bin/"mapproxy-util", "create", "-t", "base-config", testpath
-    assert_match("seed.yaml", shell_output("ls #{testpath}"))
+    assert_predicate testpath/"seed.yaml", :exist?
   end
 end
