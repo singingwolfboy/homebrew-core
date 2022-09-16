@@ -23,9 +23,11 @@ class Snapcraft < Formula
   end
 
   depends_on "rust" => :build # for cryptography
+  depends_on "jsonschema"
   depends_on "libpython-tabulate"
   depends_on "libsodium"
   depends_on "lxc"
+  depends_on "protobuf"
   depends_on "python@3.10"
   depends_on "pyyaml"
   depends_on "six"
@@ -85,11 +87,6 @@ class Snapcraft < Formula
   end
 
   fails_with gcc: "5" # due to apt on Linux
-
-  resource "attrs" do
-    url "https://files.pythonhosted.org/packages/d7/77/ebb15fc26d0f815839ecd897b919ed6d85c050feeb83e100e020df9153d2/attrs-21.4.0.tar.gz"
-    sha256 "626ba8234211db98e869df76230a137c4c40a12d72445c45d5f5b716f076e2fd"
-  end
 
   resource "catkin-pkg" do
     url "https://files.pythonhosted.org/packages/b0/c3/c2f0de6be573b2209e229f7c65e54123f1a49a24e2d25698e5de05148a17/catkin_pkg-0.5.2.tar.gz"
@@ -181,11 +178,6 @@ class Snapcraft < Formula
     sha256 "6745f113b0b588239ceb49532aa09c3ebb947433ce311ef2f8e3ad64ebb74594"
   end
 
-  resource "jsonschema" do
-    url "https://files.pythonhosted.org/packages/58/0d/c816f5ea5adaf1293a1d81d32e4cdfdaf8496973aa5049786d7fdb14e7e7/jsonschema-2.5.1.tar.gz"
-    sha256 "36673ac378feed3daa5956276a829699056523d7961027911f064b52255ead41"
-  end
-
   resource "keyring" do
     url "https://files.pythonhosted.org/packages/99/00/072e2e03d32286c12b963a236f41040a528316a5a5c2fac6ff4029c85386/keyring-23.9.1.tar.gz"
     sha256 "39e4f6572238d2615a82fcaa485e608b84b503cf080dc924c43bbbacb11c1c18"
@@ -244,11 +236,6 @@ class Snapcraft < Formula
   resource "progressbar" do
     url "https://files.pythonhosted.org/packages/a3/a6/b8e451f6cff1c99b4747a2f7235aa904d2d49e8e1464e0b798272aa84358/progressbar-2.5.tar.gz"
     sha256 "5d81cb529da2e223b53962afd6c8ca0f05c6670e40309a7219eacc36af9b6c63"
-  end
-
-  resource "protobuf" do
-    url "https://files.pythonhosted.org/packages/19/96/1283259c25bc48a6df98fa096f66fc568b40137b93806ef5ff66a2d166b1/protobuf-3.20.1.tar.gz"
-    sha256 "adc31566d027f45efe3f44eeb5b1f329da43891634d61c75a5944e9be6dd42c9"
   end
 
   resource "psutil" do
@@ -388,6 +375,11 @@ class Snapcraft < Formula
 
   def install
     virtualenv_install_with_resources
+
+    # we depend on jsonschema, but that's a separate formula, so install a `.pth` file to link them
+    site_packages = Language::Python.site_packages("python3.10")
+    jsonschema = Formula["jsonschema"].opt_libexec
+    (libexec/site_packages/"homebrew-jsonschema.pth").write jsonschema/site_packages
   end
 
   test do

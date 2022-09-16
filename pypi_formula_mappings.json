@@ -410,6 +410,9 @@
   "shallow-backup": {
     "exclude_packages": ["six"]
   },
+  "snapcraft": {
+    "exclude_packages": ["jsonschema", "attrs", "pyrsistent", "protobuf"]
+  },
   "sphinx-doc": {
     "extra_packages": ["numpydoc"]
   },
