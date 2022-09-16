@@ -304,7 +304,7 @@
     "exclude_packages": ["six"]
   },
   "parliament": {
-    "exclude_packages": ["six"]
+    "exclude_packages": ["six", "PyYAML"]
   },
   "pdm": {
     "exclude_packages": ["six"],
