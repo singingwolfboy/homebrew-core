@@ -262,6 +262,9 @@
     "exclude_packages": ["pillow"],
     "extra_packages": ["pyproj"]
   },
+  "mathlibtools": {
+    "exclude_packages": ["PyYAML"]
+  },
   "mkdocs": {
     "exclude_packages": ["six"]
   },
