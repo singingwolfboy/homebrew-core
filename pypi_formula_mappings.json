@@ -204,7 +204,7 @@
   },
   "httpie": "httpie",
   "http-prompt": {
-    "exclude_packages": ["six"]
+    "exclude_packages": ["six", "PyYAML"]
   },
   "internetarchive": {
     "exclude_packages": ["six"]
