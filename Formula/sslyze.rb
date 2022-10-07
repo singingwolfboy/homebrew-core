@@ -39,6 +39,7 @@ class Sslyze < Formula
   depends_on "pyinvoke" => :build
   depends_on "rust" => :build # for cryptography
   depends_on "openssl@1.1"
+  depends_on "python-typing-extensions"
   depends_on "python@3.10"
   uses_from_macos "libffi", since: :catalina
 
@@ -65,11 +66,6 @@ class Sslyze < Formula
   resource "tls-parser" do
     url "https://files.pythonhosted.org/packages/12/fc/282d5dd9e90d3263e759b0dfddd63f8e69760617a56b49ea4882f40a5fc5/tls_parser-2.0.0.tar.gz"
     sha256 "3beccf892b0b18f55f7a9a48e3defecd1abe4674001348104823ff42f4cbc06b"
-  end
-
-  resource "typing-extensions" do
-    url "https://files.pythonhosted.org/packages/fe/71/1df93bd59163c8084d812d166c907639646e8aac72886d563851b966bf18/typing_extensions-4.2.0.tar.gz"
-    sha256 "f1c24655a0da0d1b67f07e17a5e6b2a105894e6824b92096378bb3668ef02376"
   end
 
   def install
