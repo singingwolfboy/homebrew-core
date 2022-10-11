@@ -4,23 +4,66 @@
   },
   "ansible": {
     "extra_packages": [
-      "apache-libcloud", "boto3", "dnspython", "docker", "junos-eznc", "jxmlease", "kerberos", "ntc-templates",
-      "openshift", "passlib", "pexpect", "proxmoxer", "pysphere3", "python-consul", "python-neutronclient",
-      "pywinrm", "requests-credssp", "shade", "zabbix-api"
+      "apache-libcloud",
+      "boto3",
+      "dnspython",
+      "docker",
+      "junos-eznc",
+      "jxmlease",
+      "kerberos",
+      "ntc-templates",
+      "openshift",
+      "passlib",
+      "pexpect",
+      "proxmoxer",
+      "pysphere3",
+      "python-consul",
+      "python-neutronclient",
+      "pywinrm",
+      "requests-credssp",
+      "shade",
+      "zabbix-api"
     ],
     "exclude_packages": ["six", "PyYAML"]
+  },
+  "ansible-lint": {
+    "exclude_packages": [
+      "PyYAML",
+      "jsonschema",
+      "attrs",
+      "pyrsistent",
+      "yamllint",
+      "pathspec",
+      "ansible-core",
+      "cryptography",
+      "Jinja2",
+      "MarkupSafe",
+      "resolvelib"
+    ]
   },
   "ansible@2.8": false,
   "ansible@2.9": {
     "extra_packages": [
-      "apache-libcloud", "boto3", "dnspython", "docker-py", "junos-eznc", "jxmlease", "kerberos", "ntc-templates",
-      "openshift", "passlib", "pexpect", "pysphere3", "python-consul", "python-neutronclient",
-      "pywinrm", "requests-credssp", "shade", "zabbix-api"
+      "apache-libcloud",
+      "boto3",
+      "dnspython",
+      "docker-py",
+      "junos-eznc",
+      "jxmlease",
+      "kerberos",
+      "ntc-templates",
+      "openshift",
+      "passlib",
+      "pexpect",
+      "pysphere3",
+      "python-consul",
+      "python-neutronclient",
+      "pywinrm",
+      "requests-credssp",
+      "shade",
+      "zabbix-api"
     ],
     "exclude_packages": ["pycrypto", "six"]
-  },
-  "ansible-lint": {
-    "exclude_packages": ["PyYAML", "jsonschema", "attrs", "pyrsistent", "yamllint", "pathspec", "ansible-core", "cryptography", "Jinja2", "MarkupSafe", "resolvelib"]
   },
   "arxiv_latex_cleaner": {
     "exclude_packages": ["pillow", "six", "PyYAML"]
@@ -75,34 +118,52 @@
   "cfn-lint": {
     "exclude_packages": ["junit-xml", "six", "PyYAML"]
   },
+  "charm-tools": {
+    "exclude_packages": ["six"],
+    "extra_packages": ["wheel"]
+  },
   "charmcraft": {
     "extra_packages": ["appdirs", "pydantic"],
-    "exclude_packages": ["six", "tabulate", "PyYAML", "jsonschema", "attrs", "pyrsistent", "typing-extensions"]
+    "exclude_packages": [
+      "six",
+      "tabulate",
+      "PyYAML",
+      "jsonschema",
+      "attrs",
+      "pyrsistent",
+      "typing-extensions"
+    ]
+  },
+  "checkov": {
+    "exclude_packages": [
+      "junit-xml",
+      "six",
+      "tabulate",
+      "PyYAML",
+      "typing-extensions"
+    ],
+    "extra_packages": ["junit-xml-2"]
   },
   "ciphey": {
     "exclude_packages": ["six"]
   },
   "cloudformation-cli": {
-    "extra_packages": ["cloudformation-cli-go-plugin", "cloudformation-cli-java-plugin", "cloudformation-cli-python-plugin"],
+    "extra_packages": [
+      "cloudformation-cli-go-plugin",
+      "cloudformation-cli-java-plugin",
+      "cloudformation-cli-python-plugin"
+    ],
     "exclude_packages": ["junit-xml", "six"]
-  },
-  "charm-tools": {
-    "exclude_packages": ["six"],
-    "extra_packages": ["wheel"]
-  },
-  "checkov": {
-    "exclude_packages": ["junit-xml", "six", "tabulate", "PyYAML", "typing-extensions"],
-    "extra_packages": ["junit-xml-2"]
   },
   "cloudiscovery": {
     "exclude_packages": ["six"]
   },
+  "commitizen": {
+    "exclude_packages": ["PyYAML", "typing-extensions"]
+  },
   "conan": {
     "exclude_packages": ["six", "PyYAML"],
     "extra_packages": ["distro"]
-  },
-  "commitizen": {
-    "exclude_packages": ["PyYAML", "typing-extensions"]
   },
   "cookiecutter": {
     "exclude_packages": ["six", "PyYAML"]
@@ -118,9 +179,24 @@
   },
   "cruft": {
     "exclude_packages": [
-      "six", "PyYAML", "cookiecutter", "arrow", "binaryornot", "certifi", "chardet", "charset-normalizer",
-      "click", "idna", "Jinja2", "jinja2-time", "MarkupSafe", "python-dateutil",
-      "python-slugify", "requests", "text-unidecode", "urllib3"
+      "six",
+      "PyYAML",
+      "cookiecutter",
+      "arrow",
+      "binaryornot",
+      "certifi",
+      "chardet",
+      "charset-normalizer",
+      "click",
+      "idna",
+      "Jinja2",
+      "jinja2-time",
+      "MarkupSafe",
+      "python-dateutil",
+      "python-slugify",
+      "requests",
+      "text-unidecode",
+      "urllib3"
     ]
   },
   "csvkit": {
@@ -151,18 +227,40 @@
   },
   "duplicity": {
     "extra_packages": [
-      "azure-storage-blob", "b2sdk", "boto", "boto3", "boxsdk[jwt]",
-      "dropbox", "gdata-python3", "google-api-python-client",
-      "google-auth-oauthlib", "jottalib", "keyring", "megatools",
-      "paramiko", "pexpect", "psutil", "pydrive", "pyrax",
-      "python-swiftclient", "requests[security]", "requests-oauthlib",
+      "azure-storage-blob",
+      "b2sdk",
+      "boto",
+      "boto3",
+      "boxsdk[jwt]",
+      "dropbox",
+      "gdata-python3",
+      "google-api-python-client",
+      "google-auth-oauthlib",
+      "jottalib",
+      "keyring",
+      "megatools",
+      "paramiko",
+      "pexpect",
+      "psutil",
+      "pydrive",
+      "pyrax",
+      "python-swiftclient",
+      "requests[security]",
+      "requests-oauthlib",
       "monotonic==1.5"
     ],
     "exclude_packages": ["six", "PyYAML", "typing-extensions"]
   },
   "dvc": {
     "package_name": "dvc[all]",
-    "exclude_packages": ["protobuf", "pyarrow", "six", "tabulate", "PyYAML", "typing-extensions"]
+    "exclude_packages": [
+      "protobuf",
+      "pyarrow",
+      "six",
+      "tabulate",
+      "PyYAML",
+      "typing-extensions"
+    ]
   },
   "dxpy": {
     "exclude_packages": ["six"]
@@ -183,7 +281,14 @@
     "exclude_packages": ["six"]
   },
   "fdroidserver": {
-    "exclude_packages": ["numpy", "pillow", "six", "PyYAML", "yamllint", "pathspec"],
+    "exclude_packages": [
+      "numpy",
+      "pillow",
+      "six",
+      "PyYAML",
+      "yamllint",
+      "pathspec"
+    ],
     "extra_packages": ["wheel"]
   },
   "flintrock": {
@@ -195,7 +300,11 @@
   "gimme-aws-creds": {
     "package_name": "gimme-aws-creds",
     "exclude_packages": ["six"],
-    "extra_packages": ["pyobjc-framework-LocalAuthentication", "SecretStorage", "jeepney"]
+    "extra_packages": [
+      "pyobjc-framework-LocalAuthentication",
+      "SecretStorage",
+      "jeepney"
+    ]
   },
   "git-cola": {
     "exclude_packages": ["pyqt5"]
@@ -215,10 +324,10 @@
   "howdoi": {
     "exclude_packages": ["six"]
   },
-  "httpie": "httpie",
   "http-prompt": {
     "exclude_packages": ["six", "PyYAML"]
   },
+  "httpie": "httpie",
   "internetarchive": {
     "exclude_packages": ["six"]
   },
@@ -251,12 +360,12 @@
   "khard": {
     "exclude_packages": ["six"]
   },
+  "legit": {
+    "exclude_packages": ["six"]
+  },
   "lexicon": {
     "package_name": "dns-lexicon[full]",
     "exclude_packages": ["six", "PyYAML"]
-  },
-  "legit": {
-    "exclude_packages": ["six"]
   },
   "litecli": {
     "exclude_packages": ["six", "tabulate"]
@@ -287,15 +396,39 @@
   "molecule": {
     "extra_packages": ["docker-py", "molecule-vagrant", "python-vagrant"],
     "exclude_packages": [
-      "six", "PyYAML", "jsonschema", "attrs", "pyrsistent",
-      "cookiecutter", "arrow", "binaryornot", "certifi", "chardet", "charset-normalizer",
-      "click", "idna", "Jinja2", "jinja2-time", "MarkupSafe", "python-dateutil",
-      "python-slugify", "requests", "text-unidecode", "urllib3"
+      "six",
+      "PyYAML",
+      "jsonschema",
+      "attrs",
+      "pyrsistent",
+      "cookiecutter",
+      "arrow",
+      "binaryornot",
+      "certifi",
+      "chardet",
+      "charset-normalizer",
+      "click",
+      "idna",
+      "Jinja2",
+      "jinja2-time",
+      "MarkupSafe",
+      "python-dateutil",
+      "python-slugify",
+      "requests",
+      "text-unidecode",
+      "urllib3"
     ]
   },
   "moto": {
     "package_name": "moto[all,server]",
-    "exclude_packages": ["junit-xml", "six", "jsonschema", "attrs", "pyrsistent", "PyYAML"],
+    "exclude_packages": [
+      "junit-xml",
+      "six",
+      "jsonschema",
+      "attrs",
+      "pyrsistent",
+      "PyYAML"
+    ],
     "extra_packages": ["junit-xml-2"]
   },
   "mycli": {
@@ -362,11 +495,11 @@
   "platformio": {
     "exclude_packages": ["tabulate", "typing-extensions"]
   },
-  "podman-compose": {
-    "exclude_packages": ["PyYAML"]
-  },
   "pocsuite3": {
     "exclude_packages": ["six"]
+  },
+  "podman-compose": {
+    "exclude_packages": ["PyYAML"]
   },
   "poetry": {
     "exclude_packages": ["six", "jsonschema", "attrs", "pyrsistent"]
@@ -416,7 +549,14 @@
     "exclude_packages": ["six"]
   },
   "robot-framework": {
-    "extra_packages": ["robotframework-archivelibrary", "robotframework-selenium2library", "robotframework-sshlibrary"],
+    "extra_packages": [
+      "robotframework-archivelibrary",
+      "robotframework-selenium2library",
+      "robotframework-sshlibrary"
+    ],
+    "exclude_packages": ["six"]
+  },
+  "rtv": {
     "exclude_packages": ["six"]
   },
   "s3cmd": {
@@ -436,17 +576,18 @@
   "salt-lint": {
     "exclude_packages": ["PyYAML"]
   },
-  "shyaml": {
-    "exclude_packages": ["PyYAML"]
-  },
-  "rtv": {
-    "exclude_packages": ["six"]
-  },
   "sceptre": {
     "exclude_packages": ["six"]
   },
   "schemathesis": {
-    "exclude_packages": ["six", "PyYAML", "jsonschema", "attrs", "pyrsistent",  "typing-extensions"]
+    "exclude_packages": [
+      "six",
+      "PyYAML",
+      "jsonschema",
+      "attrs",
+      "pyrsistent",
+      "typing-extensions"
+    ]
   },
   "scipy": {
     "exclude_packages": ["numpy"]
@@ -459,16 +600,35 @@
   },
   "semgrep": {
     "package_name": "semgrep",
-    "exclude_packages": ["jsonschema", "attrs", "pyrsistent", "typing-extensions"]
+    "exclude_packages": [
+      "jsonschema",
+      "attrs",
+      "pyrsistent",
+      "typing-extensions"
+    ]
   },
   "sgr": {
-    "exclude_packages": ["typing-extensions", "jsonschema", "attrs", "pyrsistent"]
+    "exclude_packages": [
+      "typing-extensions",
+      "jsonschema",
+      "attrs",
+      "pyrsistent"
+    ]
   },
   "shallow-backup": {
     "exclude_packages": ["six"]
   },
+  "shyaml": {
+    "exclude_packages": ["PyYAML"]
+  },
   "snakemake": {
-    "exclude_packages": ["tabulate", "PyYAML", "jsonschema", "attrs", "pyrsistent"]
+    "exclude_packages": [
+      "tabulate",
+      "PyYAML",
+      "jsonschema",
+      "attrs",
+      "pyrsistent"
+    ]
   },
   "sphinx-doc": {
     "extra_packages": ["numpydoc"]
