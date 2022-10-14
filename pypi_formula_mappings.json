@@ -262,7 +262,11 @@
     "exclude_packages": ["six", "Pygments"]
   },
   "jupyterlab": {
-    "exclude_packages": ["six"]
+    "exclude_packages": ["six", "jsonschema", "attrs", "pyrsistent", "Pygments",
+    "appnope", "ipython", "asttokens", "backcall", "debugpy", "decorator", "entrypoints",
+    "executing", "jedi", "matplotlib-inline", "nest-asyncio", "packaging",
+    "parso", "pexpect", "pickleshare", "prompt-toolkit", "psutil", "ptyprocess", "pure-eval",
+    "pyparsing", "python-dateutil", "pyzmq", "stack-data", "tornado", "traitlets", "wcwidth"]
   },
   "keepkey-agent": {
     "exclude_packages": ["six"]
