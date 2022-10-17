@@ -146,33 +146,33 @@ class Jupyterlab < Formula
   end
 
   resource "nbclassic" do
-    url "https://files.pythonhosted.org/packages/a3/da/35f31f63d0bb6bec9e1e631ce3664ab99c135951a2a713708577f6ba8f80/nbclassic-0.4.4.tar.gz"
-    sha256 "f6c4fbac2c5efc6f5e7c02a69f5359a6040b90ac648719990d059bdec380afec"
+    url "https://files.pythonhosted.org/packages/09/61/3bcba7461c2956d7f39e407cfa524c2110b2f6a597f40d97a0d5e365df5e/nbclassic-0.4.6.tar.gz"
+    sha256 "3c18d343b292f938efc93205761e674f20eca06ead25e0eedc17f7ae252bf56d"
   end
 
   resource "nbclient" do
-    url "https://files.pythonhosted.org/packages/01/21/917a25fbc2b37ed37135be97efb4c98526008505451ffa841adcd7d11ed5/nbclient-0.6.8.tar.gz"
-    sha256 "268fde3457cafe1539e32eb1c6d796bbedb90b9e92bacd3e43d83413734bb0e8"
+    url "https://files.pythonhosted.org/packages/9d/8a/c36a91676da7115753e46931d672f2fff6003f6b9e78fb2dee8e739b9dcd/nbclient-0.7.0.tar.gz"
+    sha256 "a1d844efd6da9bc39d2209bf996dbd8e07bf0f36b796edfabaa8f8a9ab77c3aa"
   end
 
   resource "nbconvert" do
-    url "https://files.pythonhosted.org/packages/1f/1e/4689f4876a2871f25092dea6e6edb8c87619e54fd9cdfdf794c1676f315d/nbconvert-7.1.0.tar.gz"
-    sha256 "308c9648ebd20823cfd5af12202ac0ef5f8913fe35b51e72db28d2ca0f66a598"
+    url "https://files.pythonhosted.org/packages/af/ca/5ab3733521908fc38a1ed80adec709961aa756a019d56a0a887d7b40ffeb/nbconvert-7.2.1.tar.gz"
+    sha256 "1e180801205ad831b6e2480c5a03307dfb6327fa5b2f9b156d6fed45f9700686"
   end
 
   resource "nbformat" do
-    url "https://files.pythonhosted.org/packages/44/08/6819f06aba37c6262911b0165e2680fa5e691d72b8f63634869cb4aad656/nbformat-5.6.1.tar.gz"
-    sha256 "146b5b9969391387c2089256359f5da7c718b1d8a88ba814320273ea410e646e"
+    url "https://files.pythonhosted.org/packages/9c/54/5b39dfc6585e1dfc8c119252754c19dd85ee974606b73e3fa8a2242413d2/nbformat-5.7.0.tar.gz"
+    sha256 "1d4760c15c1a04269ef5caf375be8b98dd2f696e5eb9e603ec2bf091f9b0d3f3"
   end
 
   resource "notebook" do
-    url "https://files.pythonhosted.org/packages/d5/94/b15c0e44c37e49cf77866ff56cc7644632229b79c113a0eafd908fc7c7d7/notebook-6.4.12.tar.gz"
-    sha256 "6268c9ec9048cff7a45405c990c29ac9ca40b0bc3ec29263d218c5e01f2b4e86"
+    url "https://files.pythonhosted.org/packages/75/ea/d0928b1cb8733ff7ddad7a497efa33365d341a89987d2c5b3b56b0fa89b2/notebook-6.5.1.tar.gz"
+    sha256 "f69fd3b13df092af3a66c8797fa8ce00608db71cade89105ac4178b8d8d154aa"
   end
 
   resource "notebook-shim" do
-    url "https://files.pythonhosted.org/packages/80/14/215050c5ee184bd60e7d1e9e7e68d09c4dcacb18d3fb49c1fff4e061b94f/notebook_shim-0.1.0.tar.gz"
-    sha256 "7897e47a36d92248925a2143e3596f19c60597708f7bef50d81fcd31d7263e85"
+    url "https://files.pythonhosted.org/packages/11/d5/40ebe523d6001ef2be1e9a1799af9c2d8a7a05e9557d2439f202a4c0e6a7/notebook_shim-0.2.0.tar.gz"
+    sha256 "fdb81febb05932c6d19e44e10382ce05469cac5e1b6e99b49be6159ddb5e4804"
   end
 
   resource "pandocfilters" do
