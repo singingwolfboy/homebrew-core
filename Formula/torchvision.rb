@@ -71,6 +71,10 @@ class Torchvision < Formula
       "(jpeg_found, jpeg_conda, jpeg_include, jpeg_lib) = find_library(\"jpeglib\", vision_include)",
       "(jpeg_found, jpeg_conda, jpeg_include, jpeg_lib) = (True, False, \"#{jpeg.include}\", \"#{jpeg.lib}\")"
 
+    inreplace "pyproject.toml",
+      'requires = ["setuptools", "torch", "wheel"]',
+      'requires = ["setuptools", "wheel"]'
+
     virtualenv_install_with_resources using: "python@3.10"
 
     pkgshare.install "examples"
