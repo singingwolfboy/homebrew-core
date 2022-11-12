@@ -23,7 +23,7 @@ class Pytorch < Formula
 
   depends_on "cmake" => :build
   depends_on "ninja" => :build
-  depends_on "python@3.10" => [:build, :test]
+  depends_on "python@3.11" => [:build, :test]
   depends_on "eigen"
   depends_on "libuv"
   depends_on "numpy"
@@ -40,7 +40,7 @@ class Pytorch < Formula
 
   def install
     openssl_root = Formula["openssl@1.1"].opt_prefix
-    python_exe = Formula["python@3.10"].opt_libexec/"bin/python"
+    python_exe = Formula["python@3.11"].opt_libexec/"bin/python"
     args = %W[
       -GNinja
       -DBLAS=OpenBLAS
@@ -98,7 +98,7 @@ class Pytorch < Formula
     system "./test"
 
     # test that `torch` Python module is available
-    python = Formula["python@3.10"]
+    python = Formula["python@3.11"]
     system python.opt_libexec/"bin/python", "-c", <<~EOS
       import torch
       torch.rand(5, 3)
