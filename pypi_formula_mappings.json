@@ -482,7 +482,7 @@
     "exclude_packages": ["six", "PyYAML"]
   },
   "restview": {
-    "exclude_packages": ["six"]
+    "exclude_packages": ["six", "Pygments"]
   },
   "robot-framework": {
     "extra_packages": ["robotframework-archivelibrary", "robotframework-selenium2library", "robotframework-sshlibrary"],
