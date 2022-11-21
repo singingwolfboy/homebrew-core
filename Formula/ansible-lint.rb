@@ -22,7 +22,7 @@ class AnsibleLint < Formula
   depends_on "black"
   depends_on "jsonschema"
   depends_on "pygments"
-  depends_on "python@3.10"
+  depends_on "python@3.11"
   depends_on "pyyaml"
   depends_on "yamllint"
 
@@ -79,7 +79,7 @@ class AnsibleLint < Formula
   def install
     virtualenv_install_with_resources
 
-    site_packages = Language::Python.site_packages("python3.10")
+    site_packages = Language::Python.site_packages("python3.11")
     %w[ansible black jsonschema yamllint].each do |package_name|
       package = Formula[package_name].opt_libexec
       (libexec/site_packages/"homebrew-#{package_name}.pth").write package/site_packages
