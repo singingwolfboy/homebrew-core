@@ -21,7 +21,7 @@ class Volatility < Formula
   end
 
   depends_on "jsonschema"
-  depends_on "python@3.10"
+  depends_on "python@3.11"
   depends_on "yara"
 
   # Extra resources are from `requirements.txt`: https://github.com/volatilityfoundation/volatility3#requirements
