@@ -20,7 +20,7 @@ class Nbdime < Formula
   depends_on "ipython"
   depends_on "jsonschema"
   depends_on "jupyterlab"
-  depends_on "python@3.10"
+  depends_on "python@3.11"
   depends_on "six"
 
   resource "colorama" do
@@ -64,7 +64,7 @@ class Nbdime < Formula
   end
 
   def python3
-    "python3.10"
+    "python3.11"
   end
 
   def install
