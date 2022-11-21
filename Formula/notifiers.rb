@@ -19,7 +19,7 @@ class Notifiers < Formula
   end
 
   depends_on "jsonschema"
-  depends_on "python@3.10"
+  depends_on "python@3.11"
 
   resource "certifi" do
     url "https://files.pythonhosted.org/packages/6c/ae/d26450834f0acc9e3d1f74508da6df1551ceab6c2ce0766a593362d6d57f/certifi-2021.10.8.tar.gz"
@@ -55,7 +55,7 @@ class Notifiers < Formula
     virtualenv_install_with_resources
 
     # we depend on jsonschema, but that's a separate formula, so install a `.pth` file to link them
-    site_packages = Language::Python.site_packages("python3.10")
+    site_packages = Language::Python.site_packages("python3.11")
     jsonschema = Formula["jsonschema"].opt_libexec
     (libexec/site_packages/"homebrew-jsonschema.pth").write jsonschema/site_packages
   end
