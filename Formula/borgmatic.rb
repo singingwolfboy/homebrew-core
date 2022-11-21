@@ -18,7 +18,7 @@ class Borgmatic < Formula
   end
 
   depends_on "jsonschema"
-  depends_on "python@3.10"
+  depends_on "python@3.11"
 
   resource "certifi" do
     url "https://files.pythonhosted.org/packages/cb/a4/7de7cd59e429bd0ee6521ba58a75adaec136d32f91a761b28a11d8088d44/certifi-2022.9.24.tar.gz"
@@ -64,7 +64,7 @@ class Borgmatic < Formula
     virtualenv_install_with_resources
 
     # we depend on jsonschema, but that's a separate formula, so install a `.pth` file to link them
-    site_packages = Language::Python.site_packages("python3.10")
+    site_packages = Language::Python.site_packages("python3.11")
     jsonschema = Formula["jsonschema"].opt_libexec
     (libexec/site_packages/"homebrew-jsonschema.pth").write jsonschema/site_packages
   end
