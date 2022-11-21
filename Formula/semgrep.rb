@@ -35,7 +35,7 @@ class Semgrep < Formula
   depends_on "jsonschema"
   depends_on "pcre"
   depends_on "python-typing-extensions"
-  depends_on "python@3.10"
+  depends_on "python@3.11"
   depends_on "tree-sitter"
 
   uses_from_macos "rsync" => :build
@@ -152,6 +152,10 @@ class Semgrep < Formula
     sha256 "b1f042a899ea4c458b7321da1b5e3331e3e0ec781583434de1301946ceadb943"
   end
 
+  def python3
+    "python3.11"
+  end
+
   def install
     ENV.deparallelize
     Dir.mktmpdir("opamroot") do |opamroot|
@@ -194,13 +198,13 @@ class Semgrep < Formula
     ENV["SEMGREP_SKIP_BIN"] = "1"
     python_path = "cli"
     cd python_path do
-      venv = virtualenv_create(libexec, Formula["python@3.10"].bin/"python3.10")
+      venv = virtualenv_create(libexec, Formula[python3].bin/python3)
       venv.pip_install resources.reject { |r| r.name == "ocaml-tree-sitter" }
       venv.pip_install_and_link buildpath/python_path
     end
 
     # we depend on jsonschema, but that's a separate formula, so install a `.pth` file to link them
-    site_packages = Language::Python.site_packages("python3.10")
+    site_packages = Language::Python.site_packages(python3)
     jsonschema = Formula["jsonschema"].opt_libexec
     (libexec/site_packages/"homebrew-jsonschema.pth").write jsonschema/site_packages
   end
