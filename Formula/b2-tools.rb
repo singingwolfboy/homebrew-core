@@ -19,7 +19,7 @@ class B2Tools < Formula
   end
 
   depends_on "docutils"
-  depends_on "python@3.10"
+  depends_on "python@3.11"
   depends_on "six"
 
   conflicts_with "boost-build", because: "both install `b2` binaries"
