@@ -23,7 +23,7 @@ class CharmTools < Formula
   depends_on "jsonschema"
   depends_on "libyaml"
   depends_on "openssl@1.1"
-  depends_on "python@3.10"
+  depends_on "python@3.11"
   depends_on "six"
 
   uses_from_macos "libffi"
@@ -222,7 +222,7 @@ class CharmTools < Formula
     virtualenv_install_with_resources
 
     # we depend on jsonschema, but that's a separate formula, so install a `.pth` file to link them
-    site_packages = Language::Python.site_packages("python3.10")
+    site_packages = Language::Python.site_packages("python3.11")
     jsonschema = Formula["jsonschema"].opt_libexec
     (libexec/site_packages/"homebrew-jsonschema.pth").write jsonschema/site_packages
   end
