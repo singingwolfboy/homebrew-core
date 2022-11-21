@@ -21,7 +21,7 @@ class Snakemake < Formula
   depends_on "cbc"
   depends_on "jsonschema"
   depends_on "libpython-tabulate"
-  depends_on "python@3.10"
+  depends_on "python@3.11"
   depends_on "pyyaml"
 
   resource "appdirs" do
@@ -178,7 +178,7 @@ class Snakemake < Formula
     virtualenv_install_with_resources
 
     # we depend on jsonschema, but that's a separate formula, so install a `.pth` file to link them
-    site_packages = Language::Python.site_packages("python3.10")
+    site_packages = Language::Python.site_packages("python3.11")
     jsonschema = Formula["jsonschema"].opt_libexec
     (libexec/site_packages/"homebrew-jsonschema.pth").write jsonschema/site_packages
   end
