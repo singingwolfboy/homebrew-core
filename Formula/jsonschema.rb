@@ -6,6 +6,7 @@ class Jsonschema < Formula
   url "https://files.pythonhosted.org/packages/3a/3d/0653047b9b2ed03d3e96012bc90cfc96227221193fbedd4dc0cbf5a0e342/jsonschema-4.17.0.tar.gz"
   sha256 "5bfcf2bca16a087ade17e02b282d34af7ccd749ef76241e7f9bd7c0cb8a9424d"
   license "MIT"
+  revision 1
   head "https://github.com/python-jsonschema/jsonschema.git", branch: "main"
 
   bottle do
@@ -20,7 +21,7 @@ class Jsonschema < Formula
     sha256 cellar: :any_skip_relocation, x86_64_linux:   "d718d98a8eb62223df48171c50bba9c36cb8ffef721c203fe96464f778c2296b"
   end
 
-  depends_on "python@3.10"
+  depends_on "python@3.11"
 
   resource "attrs" do
     url "https://files.pythonhosted.org/packages/1a/cb/c4ffeb41e7137b23755a45e1bfec9cbb76ecf51874c6f1d113984ecaa32c/attrs-22.1.0.tar.gz"
