@@ -135,11 +135,6 @@ class Sgr < Formula
     sha256 "8b7ce697a2f212752a35c1ac414471dc16c424c9573be4926b56ff3f5d23b7af"
   end
 
-  resource "ruamel.yaml.clib" do
-    url "https://files.pythonhosted.org/packages/8b/25/08e5ad2431a028d0723ca5540b3af6a32f58f25e83c6dda4d0fcef7288a3/ruamel.yaml.clib-0.2.6.tar.gz"
-    sha256 "4ff604ce439abb20794f05613c374759ce10e3595d1867764dd1ae675b85acbd"
-  end
-
   resource "sodapy" do
     url "https://files.pythonhosted.org/packages/fe/47/3a6867f7cc520bc1d4869e68e2411f97d6291d80e45b1369565941286cdd/sodapy-2.1.1.tar.gz"
     sha256 "6ba8a8e9721c720f9e6c7e3cce5c44ccbbe74ad3e31e49621b63b3b6c6bd2d9f"
