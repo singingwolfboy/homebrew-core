@@ -63,6 +63,13 @@ class Nbdime < Formula
     sha256 "1acf7a0bcd3004ae8357409fc33751e16d37ccc650921da1094a86581ad1e417"
   end
 
+  # This is necessary to make nbdime install on Python 3.11
+  # See https://github.com/jupyter/nbdime/pull/640
+  patch do
+    url "https://github.com/jupyter/nbdime/commit/f67a809262b45ed0eaedc840b0e5d979eaa6965d.patch?full_index=1"
+    sha256 "1edbc17ee7d66563b5c3044e908e65c6d036963bcf39bf43f469273ed32d37ec"
+  end
+
   def python3
     "python3.11"
   end
