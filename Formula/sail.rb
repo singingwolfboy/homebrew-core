@@ -21,7 +21,7 @@ class Sail < Formula
 
   depends_on "fabric"
   depends_on "pyinvoke"
-  depends_on "python@3.10"
+  depends_on "python@3.11"
   depends_on "pyyaml"
   depends_on "six"
 
@@ -101,7 +101,7 @@ class Sail < Formula
   end
 
   def install
-    python3 = "python3.10"
+    python3 = "python3.11"
     venv = virtualenv_create(libexec, python3)
     venv.pip_install resources
 
