@@ -28,7 +28,7 @@ class NodeAT18 < Formula
   deprecate! date: "2023-10-18", because: :unsupported
 
   depends_on "pkg-config" => :build
-  depends_on "python@3.10" => :build
+  depends_on "python@3.11" => :build
   depends_on "brotli"
   depends_on "c-ares"
   depends_on "icu4c"
@@ -56,7 +56,7 @@ class NodeAT18 < Formula
     ENV.llvm_clang if OS.mac? && (DevelopmentTools.clang_build_version <= 1100)
 
     # make sure subprocesses spawned by make are using our Python 3
-    ENV["PYTHON"] = which("python3.10")
+    ENV["PYTHON"] = which("python3.11")
 
     args = %W[
       --prefix=#{prefix}
