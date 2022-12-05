@@ -41,7 +41,7 @@ class Sslyze < Formula
   depends_on arch: :x86_64 # https://github.com/nabla-c0d3/nassl/issues/83
   depends_on "openssl@1.1"
   depends_on "python-typing-extensions"
-  depends_on "python@3.10"
+  depends_on "python@3.11"
   uses_from_macos "libffi", since: :catalina
 
   resource "cffi" do
@@ -70,7 +70,7 @@ class Sslyze < Formula
   end
 
   def install
-    venv = virtualenv_create(libexec, "python3.10")
+    venv = virtualenv_create(libexec, "python3.11")
     venv.pip_install resources.reject { |r| r.name == "nassl" }
 
     ENV.prepend_path "PATH", libexec/"bin"
