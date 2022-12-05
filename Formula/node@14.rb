@@ -38,17 +38,17 @@ class NodeAT14 < Formula
   uses_from_macos "zlib"
 
   on_macos do
-    depends_on "python@3.10" => [:build, :test]
+    depends_on "python@3.11" => [:build, :test]
     depends_on "macos-term-size"
   end
 
   def python3
-    Formula["python@3.10"]
+    Formula["python@3.11"]
   end
 
   def install
     # make sure subprocesses spawned by make are using our Python 3
-    ENV["PYTHON"] = python = python3.opt_bin/"python3.10"
+    ENV["PYTHON"] = python = python3.opt_bin/"python3.11"
 
     args = %W[
       --prefix=#{prefix}
