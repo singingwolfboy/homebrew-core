@@ -34,7 +34,7 @@ class Swift < Formula
   # This is mostly community sourced, so may be not necessarily be accurate.
   depends_on xcode: ["13.0", :build]
 
-  depends_on "python@3.10"
+  depends_on "python@3.11"
 
   # HACK: this should not be a test dependency but is due to a limitation with fails_with
   uses_from_macos "llvm" => [:build, :test]
