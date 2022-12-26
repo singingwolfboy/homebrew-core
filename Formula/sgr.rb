@@ -23,7 +23,7 @@ class Sgr < Formula
   depends_on "libpq" # for psycopg2-binary
   depends_on "python-tabulate"
   depends_on "python-typing-extensions"
-  depends_on "python@3.10"
+  depends_on "python@3.11"
 
   resource "asciitree" do
     url "https://files.pythonhosted.org/packages/2d/6a/885bc91484e1aa8f618f6f0228d76d0e67000b0fdd6090673b777e311913/asciitree-0.3.3.tar.gz"
@@ -171,7 +171,7 @@ class Sgr < Formula
   end
 
   def install
-    venv = virtualenv_create(libexec, "python3.10")
+    venv = virtualenv_create(libexec, "python3.11")
     venv.pip_install resources
     poetry = Formula["poetry"].opt_bin/"poetry"
     system poetry, "build", "--format", "wheel", "--verbose", "--no-interaction"
@@ -179,7 +179,7 @@ class Sgr < Formula
     bin.install_symlink libexec/"bin/sgr"
 
     # we depend on jsonschema, but that's a separate formula, so install a `.pth` file to link them
-    site_packages = Language::Python.site_packages("python3.10")
+    site_packages = Language::Python.site_packages("python3.11")
     jsonschema = Formula["jsonschema"].opt_libexec
     (libexec/site_packages/"homebrew-jsonschema.pth").write jsonschema/site_packages
   end
