@@ -19,7 +19,6 @@ class Sgr < Formula
 
   depends_on "poetry" => :build
   depends_on "rust" => :build # for cryptography
-  depends_on "jsonschema"
   depends_on "libpq" # for psycopg2-binary
   depends_on "python-tabulate"
   depends_on "python-typing-extensions"
@@ -85,6 +84,11 @@ class Sgr < Formula
     sha256 "4158fcecd13733f8be669be0683b96ebdbbd38d23559f54dca7205aea1bf1e35"
   end
 
+  resource "jsonschema" do
+    url "https://files.pythonhosted.org/packages/36/3d/ca032d5ac064dff543aa13c984737795ac81abc9fb130cd2fcff17cfabc7/jsonschema-4.17.3.tar.gz"
+    sha256 "0f864437ab8b6076ba6707453ef8f98a6a0d512a80e93f8abdb676f737ecb60d"
+  end
+
   resource "minio" do
     url "https://files.pythonhosted.org/packages/06/b7/00515aa513fc3a3ab7962ece652746eab82d8f2fd620e944f858701844a6/minio-7.1.10.tar.gz"
     sha256 "4a2e1c0d41fb4c0936be544b73fbb1f4eb85d17002b232f101bc701b0b1203e2"
@@ -101,8 +105,8 @@ class Sgr < Formula
   end
 
   resource "pglast" do
-    url "https://files.pythonhosted.org/packages/88/df/201bb63cd9777007b89070b23e6bfb00e6da0ef2cbb9d8a4fd3df4c257e1/pglast-3.4.tar.gz"
-    sha256 "d2288d9607097a08529d9165970261c1be956934e8a8f6d9ed2a96d9b8f03fc6"
+    url "https://files.pythonhosted.org/packages/3b/a8/4d85067f06f13e8199dcf1efc57668e7e45160f618ae47864e98560c7b16/pglast-3.17.tar.gz"
+    sha256 "0b6496b97e8bb7847adab90d27da8ea152b9d23f93524868194c3eb1e5a34d0c"
   end
 
   resource "psycopg2-binary" do
@@ -136,8 +140,8 @@ class Sgr < Formula
   end
 
   resource "ruamel.yaml.clib" do
-    url "https://files.pythonhosted.org/packages/8b/25/08e5ad2431a028d0723ca5540b3af6a32f58f25e83c6dda4d0fcef7288a3/ruamel.yaml.clib-0.2.6.tar.gz"
-    sha256 "4ff604ce439abb20794f05613c374759ce10e3595d1867764dd1ae675b85acbd"
+    url "https://files.pythonhosted.org/packages/d5/31/a3e6411947eb7a4f1c669f887e9e47d61a68f9d117f10c3c620296694a0b/ruamel.yaml.clib-0.2.7.tar.gz"
+    sha256 "1f08fd5a2bea9c4180db71678e850b995d2a5f4537be0e94557668cf0f5f9497"
   end
 
   resource "sodapy" do
@@ -177,11 +181,6 @@ class Sgr < Formula
     system poetry, "build", "--format", "wheel", "--verbose", "--no-interaction"
     venv.pip_install_and_link buildpath.glob("dist/splitgraph-*.whl").first
     bin.install_symlink libexec/"bin/sgr"
-
-    # we depend on jsonschema, but that's a separate formula, so install a `.pth` file to link them
-    site_packages = Language::Python.site_packages("python3.11")
-    jsonschema = Formula["jsonschema"].opt_libexec
-    (libexec/site_packages/"homebrew-jsonschema.pth").write jsonschema/site_packages
   end
 
   test do
