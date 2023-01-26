@@ -383,6 +383,9 @@
   "mycli": {
     "exclude_packages": ["six", "tabulate", "Pygments"]
   },
+  "name-that-hash": {
+    "exclude_packages": ["Pygments"]
+  },
   "nbdime": {
     "exclude_packages": [
       "jupyterlab", "ipython",
