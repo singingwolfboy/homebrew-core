@@ -279,7 +279,7 @@
   },
   "httpie": "httpie",
   "http-prompt": {
-    "exclude_packages": ["six", "PyYAML"]
+    "exclude_packages": ["six", "PyYAML", "Pygments"]
   },
   "huggingface-cli": {
     "package_name": "huggingface-hub",
