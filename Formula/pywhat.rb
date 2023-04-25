@@ -20,6 +20,7 @@ class Pywhat < Formula
     sha256 cellar: :any_skip_relocation, x86_64_linux:   "f453b0de5fc318d9383a4afef920a6d3b989973b60a56be616e37f51827b2332"
   end
 
+  depends_on "hatch" => :build
   depends_on "poetry" => :build
   depends_on "pygments"
   depends_on "python@3.11"
@@ -45,9 +46,28 @@ class Pywhat < Formula
   end
 
   def install
-    venv = virtualenv_create(libexec, "python3.11")
-    venv.pip_install resources
+    hatch = Formula["hatch"].opt_bin/"hatch"
     poetry = Formula["poetry"].opt_bin/"poetry"
+
+    venv = virtualenv_create(libexec, "python3.11")
+
+    # colorama uses hatch
+    resource("colorama").stage do
+      system hatch, "build", "-t", "wheel"
+      venv.pip_install Dir["dist/*.whl"].first
+    end
+
+    # rich uses poetry
+    resource("rich").stage do
+      system poetry, "build", "--format", "wheel", "--verbose", "--no-interaction"
+      venv.pip_install Dir["dist/*.whl"].first
+    end
+
+    # install other deps
+    handled_resources = %w[colorama rich]
+    venv.pip_install resources.reject { |r| handled_resources.include? r.name }
+
+    # install pywhat, with poetry
     system poetry, "build", "--format", "wheel", "--verbose", "--no-interaction"
     venv.pip_install_and_link buildpath.glob("dist/pywhat-*.whl").first
     bin.install_symlink libexec/"bin/what"
