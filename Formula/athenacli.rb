@@ -19,6 +19,7 @@ class Athenacli < Formula
     sha256 cellar: :any_skip_relocation, x86_64_linux:   "ecfb036ceb566cc93d605e2feadf27d0fffbb0c82719eb9ac11b40e6c08ceac9"
   end
 
+  depends_on "pygments"
   depends_on "python-tabulate"
   depends_on "python@3.11"
   depends_on "six"
@@ -66,11 +67,6 @@ class Athenacli < Formula
   resource "pyathena" do
     url "https://files.pythonhosted.org/packages/31/5c/9ffcae3db22541446ab117eb36d8f539f80cf985294ebf96fe7ed7613182/pyathena-2.25.2.tar.gz"
     sha256 "aebb8254dd7b2a450841ee3552bf443002a2deaed93fae0ae6f4258b5eb2d367"
-  end
-
-  resource "pygments" do
-    url "https://files.pythonhosted.org/packages/15/53/5345177cafa79a49e02c27102019a01ef1682ab170d2138deca47a4c8924/Pygments-2.11.1.tar.gz"
-    sha256 "59b895e326f0fb0d733fd28c6839bd18ad0687ba20efc26d4277fd1d30b971f4"
   end
 
   resource "python-dateutil" do
