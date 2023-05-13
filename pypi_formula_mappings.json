@@ -397,6 +397,9 @@
   "litecli": {
     "exclude_packages": ["six", "tabulate", "Pygments"]
   },
+  "literate-git": {
+    "exclude_packages": ["Pygments"]
+  },
   "localstack": {
     "exclude_packages": ["cffi", "six", "tabulate", "pycparser", "PyYAML", "Pygments"]
   },
