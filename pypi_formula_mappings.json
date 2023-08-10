@@ -679,6 +679,14 @@
   "pylint": {
     "exclude_packages": ["isort", "typing-extensions"]
   },
+  "pylsp": {
+    "package_name": "python-lsp-server[websockets]",
+    "extra_packages": ["python-lsp-black", "pylsp-mypy"],
+    "exclude_packages": [
+      "black", "click", "mypy", "mypy-extensions", "packaging", "pathspec",
+      "platformdirs", "typing-extensions"
+    ]
+  },
   "pyqt": {
     "exclude_packages": [
       "PyQt6-3D-Qt6", "PyQt6-Charts-Qt6", "PyQt6-DataVisualization-Qt6",
