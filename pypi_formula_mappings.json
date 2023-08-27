@@ -64,6 +64,9 @@
   "athenacli": {
     "exclude_packages": ["six", "tabulate"]
   },
+  "autopep8": {
+    "exclude_packages": ["pycodestyle"]
+  },
   "aws-elasticbeanstalk": {
     "exclude_packages": ["cffi", "cryptography", "pycparser", "certifi", "PyYAML", "six"]
   },

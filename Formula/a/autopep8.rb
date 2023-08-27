@@ -17,12 +17,8 @@ class Autopep8 < Formula
     sha256 cellar: :any_skip_relocation, x86_64_linux:   "6390f91af41962e963c4b1b4d9b72ffe68302fe5eebeefd4ba40eda03760711d"
   end
 
+  depends_on "pycodestyle"
   depends_on "python@3.11"
-
-  resource "pycodestyle" do
-    url "https://files.pythonhosted.org/packages/c1/2d/022c78a6b3f591205e52b4d25c93b7329280f752b36ba2fc1377cbf016cd/pycodestyle-2.11.0.tar.gz"
-    sha256 "259bcc17857d8a8b3b4a2327324b79e5f020a13c16074670f9c8c8f872ea76d0"
-  end
 
   def install
     virtualenv_install_with_resources
