@@ -18,16 +18,12 @@ class Flake8 < Formula
     sha256 cellar: :any_skip_relocation, x86_64_linux:   "2c0d35a1ff6ccb302ea1e7d2a8777047f89dc4647c963ebab3ea315f4240424f"
   end
 
+  depends_on "pycodestyle"
   depends_on "python@3.11"
 
   resource "mccabe" do
     url "https://files.pythonhosted.org/packages/e7/ff/0ffefdcac38932a54d2b5eed4e0ba8a408f215002cd178ad1df0f2806ff8/mccabe-0.7.0.tar.gz"
     sha256 "348e0240c33b60bbdf4e523192ef919f28cb2c3d7d5c7794f74009290f236325"
-  end
-
-  resource "pycodestyle" do
-    url "https://files.pythonhosted.org/packages/c1/2d/022c78a6b3f591205e52b4d25c93b7329280f752b36ba2fc1377cbf016cd/pycodestyle-2.11.0.tar.gz"
-    sha256 "259bcc17857d8a8b3b4a2327324b79e5f020a13c16074670f9c8c8f872ea76d0"
   end
 
   resource "pyflakes" do

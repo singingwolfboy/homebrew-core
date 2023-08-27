@@ -336,6 +336,9 @@
     ],
     "extra_packages": ["wheel"]
   },
+  "flake8": {
+    "exclude_packages": ["pycodestyle"]
+  },
   "flintrock": {
     "exclude_packages": ["cffi", "cryptography", "pycparser", "PyYAML", "six"]
   },
