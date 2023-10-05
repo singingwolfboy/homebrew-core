@@ -198,6 +198,8 @@ class Mitmproxy < Formula
     ENV["PROTOC"] = Formula["protobuf"].opt_bin/"protoc"
 
     virtualenv_install_with_resources
+
+    generate_completions_from_executable(bin/"mitmproxy", shells: [:fish, :zsh], shell_parameter_format: :click)
   end
 
   test do
@@ -211,7 +213,7 @@ __END__
 +++ b/local_dependencies/mitmproxy/build.rs
 @@ -1,9 +1,11 @@
  extern crate prost_build;
- 
+
  fn main() {
 -    if let Ok(protoc_path) = protoc_bin_vendored::protoc_bin_path() {
 -        std::env::set_var("PROTOC", protoc_path);
@@ -221,6 +223,6 @@ __END__
 +        _ => protoc_bin_vendored::protoc_bin_path().expect("protoc is not available"),
 +    };
 +    std::env::set_var("PROTOC", protoc_path);
- 
+
      prost_build::compile_protos(
          &["./src/packet_sources/ipc.proto"],
