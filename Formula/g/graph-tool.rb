@@ -24,7 +24,7 @@ class GraphTool < Formula
 
   depends_on "autoconf" => :build
   depends_on "automake" => :build
-  depends_on "cmake" => :build
+  depends_on "cmake" => :build # for matplotlib
   depends_on "libtool" => :build
   depends_on "pkg-config" => :build
   depends_on "boost"
@@ -40,6 +40,7 @@ class GraphTool < Formula
   depends_on "pillow"
   depends_on "py3cairo"
   depends_on "pygobject3"
+  depends_on "python-packaging"
   depends_on "python@3.11"
   depends_on "scipy"
   depends_on "six"
@@ -72,11 +73,6 @@ class GraphTool < Formula
 
     # fix numpy build issue, https://github.com/matplotlib/matplotlib/issues/26246
     patch :DATA
-  end
-
-  resource "packaging" do
-    url "https://files.pythonhosted.org/packages/b9/6c/7c6658d258d7971c5eb0d9b69fa9265879ec9a9158031206d47800ae2213/packaging-23.1.tar.gz"
-    sha256 "a392980d2b6cffa644431898be54b0045151319d1e7ec34f0cfed48767dd334f"
   end
 
   resource "pyparsing" do
