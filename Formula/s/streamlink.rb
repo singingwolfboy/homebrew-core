@@ -19,14 +19,11 @@ class Streamlink < Formula
     sha256 cellar: :any_skip_relocation, x86_64_linux:   "c873c5d448ec6cfb06ebaedcfd279b1489b550d936c6473f2cfdffba6c805687"
   end
 
-  depends_on "libxml2" # https://github.com/Homebrew/homebrew-core/issues/98468
   depends_on "python-certifi"
+  depends_on "python-lxml"
   depends_on "python-typing-extensions"
   depends_on "python@3.12"
   depends_on "six"
-
-  uses_from_macos "libffi"
-  uses_from_macos "libxslt"
 
   on_linux do
     depends_on "pkg-config" => :build
@@ -55,11 +52,6 @@ class Streamlink < Formula
   resource "isodate" do
     url "https://files.pythonhosted.org/packages/db/7a/c0a56c7d56c7fa723988f122fa1f1ccf8c5c4ccc48efad0d214b49e5b1af/isodate-0.6.1.tar.gz"
     sha256 "48c5881de7e8b0a0d648cb024c8062dc84e7b840ed81e864c7614fd3c127bde9"
-  end
-
-  resource "lxml" do
-    url "https://files.pythonhosted.org/packages/30/39/7305428d1c4f28282a4f5bdbef24e0f905d351f34cf351ceb131f5cddf78/lxml-4.9.3.tar.gz"
-    sha256 "48628bd53a426c9eb9bc066a923acaa0878d1e86129fd5359aee99285f4eed9c"
   end
 
   resource "outcome" do
