@@ -22,14 +22,12 @@ class Textract < Formula
   depends_on "flac"
   depends_on "pillow"
   depends_on "poppler"
+  depends_on "python-lxml"
   depends_on "python@3.11"
   depends_on "six"
   depends_on "swig"
   depends_on "tesseract"
   depends_on "unrtf"
-
-  uses_from_macos "libxml2"
-  uses_from_macos "libxslt"
 
   resource "argcomplete" do
     url "https://files.pythonhosted.org/packages/ae/28/07d2cfe0838f998ea2eafab59f52b0ceb1e70adb1831fa14b958a9fa6c5c/argcomplete-1.10.3.tar.gz"
@@ -69,11 +67,6 @@ class Textract < Formula
   resource "IMAPClient" do
     url "https://files.pythonhosted.org/packages/ea/31/883f78210ed7578f6dd41e4dbc3ad5e7c6127a51e56513b8b7bb7efdf9b3/IMAPClient-2.1.0.zip"
     sha256 "60ba79758cc9f13ec910d7a3df9acaaf2bb6c458720d9a02ec33a41352fd1b99"
-  end
-
-  resource "lxml" do
-    url "https://files.pythonhosted.org/packages/70/bb/7a2c7b4f8f434aa1ee801704bf08f1e53d7b5feba3d5313ab17003477808/lxml-4.9.1.tar.gz"
-    sha256 "fe749b052bb7233fe5d072fcb549221a8cb1a16725c47c37e42b0b9cb3ff2c3f"
   end
 
   resource "olefile" do

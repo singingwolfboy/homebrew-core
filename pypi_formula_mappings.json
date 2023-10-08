@@ -941,6 +941,9 @@
   "tern": {
     "exclude_packages": ["certifi", "PyYAML", "packaging"]
   },
+  "textract": {
+    "exclude_packages": ["lxml", "six"]
+  },
   "thefuck": {
     "exclude_packages": ["six"]
   },
