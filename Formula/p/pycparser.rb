@@ -18,19 +18,27 @@ class Pycparser < Formula
     sha256 cellar: :any_skip_relocation, x86_64_linux:   "e1e7b30c1fb7012bc60b3e53ab282d2da37cf614282c4eec8cc11c686de441f8"
   end
 
-  depends_on "python@3.11"
+  depends_on "python@3.11" => [:build, :test]
+  depends_on "python@3.12" => [:build, :test]
 
-  def python3
-    which("python3.11")
+  def pythons
+    deps.map(&:to_formula).sort_by(&:version).filter { |f| f.name.start_with?("python@") }
   end
 
   def install
-    system python3, "-m", "pip", "install", *std_pip_args, "."
+    pythons.each do |python|
+      python_exe = python.opt_libexec/"bin/python"
+      system python_exe, "-m", "pip", "install", *std_pip_args, "."
+    end
+
     pkgshare.install "examples"
   end
 
   test do
     examples = pkgshare/"examples"
-    system python3, examples/"c-to-c.py", examples/"c_files/basic.c"
+    pythons.each do |python|
+      python_exe = python.opt_libexec/"bin/python"
+      system python_exe, examples/"c-to-c.py", examples/"c_files/basic.c"
+    end
   end
 end
