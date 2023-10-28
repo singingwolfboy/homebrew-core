@@ -46,10 +46,10 @@ class Questdb < Formula
       fork do
         exec bin/"questdb", "start", "-d", testpath/"data"
       end
-      sleep 30
-      output = shell_output("curl -Is localhost:9000/index.html")
-      sleep 4
-      assert_match "questDB", output
+
+      assert_match "questDB", shell_output(
+        "curl --silent --head --retry 10 --retry-connrefused localhost:9000/index.html",
+      )
     ensure
       system bin/"questdb", "stop"
     end
