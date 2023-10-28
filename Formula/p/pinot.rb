@@ -42,7 +42,12 @@ class Pinot < Formula
         zkport.to_s
     end
 
-    sleep 10
+    assert_match(
+      "HTTP/1.1 200 OK",
+      shell_output(
+        "curl --include --retry 10 --retry-connrefused http://localhost:#{zkport} 2>&1",
+      ),
+    )
 
     controller_pid = fork do
       exec "#{opt_bin}/pinot-admin",
@@ -53,9 +58,12 @@ class Pinot < Formula
         controller_port.to_s
     end
 
-    sleep 40
-
-    assert_match("HTTP/1.1 200 OK", shell_output("curl -i http://localhost:#{controller_port} 2>&1"))
+    assert_match(
+      "HTTP/1.1 200 OK",
+      shell_output(
+        "curl --include --retry 10 --retry-connrefused http://localhost:#{controller_port} 2>&1",
+      ),
+    )
 
   ensure
     Process.kill "TERM", controller_pid
