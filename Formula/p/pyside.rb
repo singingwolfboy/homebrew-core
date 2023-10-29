@@ -25,7 +25,7 @@ class Pyside < Formula
   depends_on "ninja" => :build
   depends_on xcode: :build
   depends_on "llvm"
-  depends_on "python@3.11"
+  depends_on "python@3.12"
   depends_on "qt"
 
   uses_from_macos "libxml2"
@@ -38,7 +38,7 @@ class Pyside < Formula
   fails_with gcc: "5"
 
   def python3
-    "python3.11"
+    "python3.12"
   end
 
   def install
