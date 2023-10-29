@@ -23,6 +23,7 @@ class Snapcraft < Formula
     sha256 cellar: :any_skip_relocation, x86_64_linux:   "af2c59001b2f87573dc8abbbc2af25fb690b2a51d585905fe0947fbb346869c2"
   end
 
+  depends_on "python-setuptools" => :build
   depends_on "cffi"
   depends_on "libsodium"
   depends_on "lxc"
@@ -32,7 +33,7 @@ class Snapcraft < Formula
   depends_on "python-pytz"
   depends_on "python-tabulate"
   depends_on "python-typing-extensions"
-  depends_on "python@3.11"
+  depends_on "python@3.12"
   depends_on "pyyaml"
   depends_on "six"
   depends_on "snap"
