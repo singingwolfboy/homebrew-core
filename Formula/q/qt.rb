@@ -37,7 +37,7 @@ class Qt < Formula
   depends_on "ninja"      => :build
   depends_on "node"       => :build
   depends_on "pkg-config" => :build
-  depends_on "python@3.11" => :build
+  depends_on "python@3.12" => :build
   depends_on "six" => :build
   depends_on "vulkan-headers" => [:build, :test]
   depends_on "vulkan-loader" => [:build, :test]
@@ -139,7 +139,7 @@ class Qt < Formula
     # https://bugreports.qt.io/browse/QTBUG-113391
     ENV.runtime_cpu_detection
 
-    python = "python3.11"
+    python = "python3.12"
     # Install python dependencies for QtWebEngine
     venv_root = buildpath/"venv"
     venv = virtualenv_create(venv_root, python)
