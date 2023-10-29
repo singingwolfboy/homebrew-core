@@ -1,8 +1,8 @@
 class Pyqt < Formula
   desc "Python bindings for v6 of Qt"
   homepage "https://www.riverbankcomputing.com/software/pyqt/intro"
-  url "https://files.pythonhosted.org/packages/34/da/e03b7264b1e88cd553ff62a71c0c19f55690e08928130f4aae613723e535/PyQt6-6.5.2.tar.gz"
-  sha256 "1487ee7350f9ffb66d60ab4176519252c2b371762cbe8f8340fd951f63801280"
+  url "https://files.pythonhosted.org/packages/18/b8/74667c8108d8481b87f8d87e6d962b64eb53ea21432cdbfbfeee4d2b4430/PyQt6-6.5.3.tar.gz"
+  sha256 "bcbbf9511b038b4924298ca10999aa36eb37a0a38d0638f895f9bba6025c0a77"
   license "GPL-3.0-only"
 
   bottle do
@@ -17,10 +17,11 @@ class Pyqt < Formula
     sha256 cellar: :any_skip_relocation, x86_64_linux:   "0ce996c6a606402baeba727decc8ff59aec06c962424ba6c3d80741735cd14a5"
   end
 
-  depends_on "pyqt-builder" => :build
-  depends_on "sip"          => :build
+  depends_on "pyqt-builder"      => :build
+  depends_on "python-setuptools" => :build
+  depends_on "sip"               => :build
 
-  depends_on "python@3.11"
+  depends_on "python@3.12"
   depends_on "qt"
 
   fails_with gcc: "5"
@@ -57,7 +58,7 @@ class Pyqt < Formula
   end
 
   def python3
-    "python3.11"
+    "python3.12"
   end
 
   def install
