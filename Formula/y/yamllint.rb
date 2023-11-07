@@ -20,7 +20,7 @@ class Yamllint < Formula
     sha256 cellar: :any_skip_relocation, x86_64_linux:   "7fdb5f2a3b54744ed76215cb4f1aeb491194b244dfb16b2a929b97e7a03de7a0"
   end
 
-  depends_on "python@3.11"
+  depends_on "python@3.12"
   depends_on "pyyaml"
 
   resource "pathspec" do
