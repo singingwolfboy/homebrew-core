@@ -21,7 +21,7 @@ class PythonLspServer < Formula
   depends_on "black"
   depends_on "mypy"
   depends_on "pydocstyle"
-  depends_on "python@3.11"
+  depends_on "python@3.12"
   depends_on "ruff"
 
   resource "attrs" do
@@ -109,7 +109,7 @@ class PythonLspServer < Formula
   end
 
   def python3
-    "python3.11"
+    "python3.12"
   end
 
   def install
