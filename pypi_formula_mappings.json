@@ -140,7 +140,7 @@
   },
   "black": {
     "package_name": "black[d]",
-    "exclude_packages": ["packaging"]
+    "exclude_packages": ["click", "packaging"]
   },
   "borgmatic": {
     "extra_packages": ["ruamel.yaml.clib"],

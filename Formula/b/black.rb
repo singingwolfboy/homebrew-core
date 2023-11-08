@@ -6,6 +6,7 @@ class Black < Formula
   url "https://files.pythonhosted.org/packages/ef/21/c2d38c7c98a089fd0f7e1a8be16c07f141ed57339b3082737de90db0ca59/black-23.11.0.tar.gz"
   sha256 "4c68855825ff432d197229846f971bc4d6666ce90492e5b02013bcaca4d9ab05"
   license "MIT"
+  revision 1
   head "https://github.com/psf/black.git", branch: "main"
 
   livecheck do
@@ -23,12 +24,13 @@ class Black < Formula
     sha256 cellar: :any_skip_relocation, x86_64_linux:   "d29d1eb3b8a35cbd3f5a6617ff8b4c168d2b5acd4231c64df830d0711f4611f5"
   end
 
+  depends_on "python-click"
   depends_on "python-packaging"
-  depends_on "python@3.11"
+  depends_on "python@3.12"
 
   resource "aiohttp" do
-    url "https://files.pythonhosted.org/packages/fd/01/f180d31923751fd20185c96938994823f00918ee5ac7b058edc005382406/aiohttp-3.8.6.tar.gz"
-    sha256 "b0cf2a4501bff9330a8a5248b4ce951851e415bdcce9dc158e76cfd55e15085c"
+    url "https://files.pythonhosted.org/packages/2f/d2/1e9a33d15b85b0ea0d4029e3fdca0979e9b864314b965a4d3f0882e5dede/aiohttp-3.9.0b1.tar.gz"
+    sha256 "d6e120b08ac168825239c64e0a850a108edb9cd17be247e25bced9b07a14a403"
   end
 
   resource "aiosignal" do
@@ -49,11 +51,6 @@ class Black < Formula
   resource "charset-normalizer" do
     url "https://files.pythonhosted.org/packages/63/09/c1bc53dab74b1816a00d8d030de5bf98f724c52c1635e07681d312f20be8/charset-normalizer-3.3.2.tar.gz"
     sha256 "f30c3cb33b24454a82faecaf01b19c18562b1e89558fb6c56de4d9118a032fd5"
-  end
-
-  resource "click" do
-    url "https://files.pythonhosted.org/packages/96/d3/f04c7bfcf5c1862a2a5b845c6b2b360488cf47af55dfa79c98f6a6bf98b5/click-8.1.7.tar.gz"
-    sha256 "ca9853ad459e787e2192211578cc907e7594e294c7ccc834310722b41b9ca6de"
   end
 
   resource "frozenlist" do
