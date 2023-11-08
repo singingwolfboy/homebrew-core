@@ -20,12 +20,12 @@ class Snakefmt < Formula
 
   depends_on "black"
   depends_on "python-toml"
-  depends_on "python@3.11"
+  depends_on "python@3.12"
 
   def install
     virtualenv_install_with_resources
 
-    site_packages = Language::Python.site_packages("python3.11")
+    site_packages = Language::Python.site_packages("python3.12")
     black = Formula["black"].opt_libexec
     (libexec/site_packages/"homebrew-black.pth").write black/site_packages
   end
