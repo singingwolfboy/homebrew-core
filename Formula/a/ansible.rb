@@ -28,8 +28,9 @@ class Ansible < Formula
   depends_on "python-lxml"
   depends_on "python-markupsafe"
   depends_on "python-packaging"
+  depends_on "python-pyparsing"
   depends_on "python-pytz"
-  depends_on "python@3.11"
+  depends_on "python@3.12"
   depends_on "pyyaml"
   depends_on "six"
 
@@ -325,11 +326,6 @@ class Ansible < Formula
     sha256 "8ac7448f09ab85811607bdd21ec2464495ac8b7c66d146bf545b0f08fb9220ba"
   end
 
-  resource "pyparsing" do
-    url "https://files.pythonhosted.org/packages/37/fe/65c989f70bd630b589adfbbcd6ed238af22319e90f059946c26b4835e44b/pyparsing-3.1.1.tar.gz"
-    sha256 "ede28a1a32462f5a9705e07aea48001a08f7cf81a021585011deba701581a0db"
-  end
-
   resource "pyperclip" do
     url "https://files.pythonhosted.org/packages/a7/2c/4c64579f847bd5d539803c8b909e54ba087a79d01bb3aba433a95879a6c5/pyperclip-1.8.2.tar.gz"
     sha256 "105254a8b04934f0bc84e9c24eb360a591aaf6535c9def5f29d92af107a9bf57"
@@ -501,7 +497,7 @@ class Ansible < Formula
   end
 
   def install
-    venv = virtualenv_create(libexec, "python3.11")
+    venv = virtualenv_create(libexec, "python3.12")
     # Install all of the resources declared on the formula into the virtualenv.
     resources.each do |r|
       # ansible-core provides all ansible binaries
@@ -530,7 +526,7 @@ class Ansible < Formula
     EOS
     (testpath/"hosts.ini").write [
       "localhost ansible_connection=local",
-      " ansible_python_interpreter=#{Formula["python@3.11"].opt_bin}/python3.11",
+      " ansible_python_interpreter=#{Formula["python@3.12"].opt_bin}/python3.12",
       "\n",
     ].join
     system bin/"ansible-playbook", testpath/"playbook.yml", "-i", testpath/"hosts.ini"

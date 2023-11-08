@@ -25,7 +25,7 @@
   },
   "ansible": {
     "exclude_packages": [
-      "certifi", "cffi", "cryptography", "lxml", "markupsafe", "pycparser",
+      "certifi", "cffi", "cryptography", "lxml", "markupsafe", "pycparser", "pyparsing",
       "pytz", "pyyaml", "six", "packaging"
     ],
     "extra_packages": [
