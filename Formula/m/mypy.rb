@@ -18,7 +18,7 @@ class Mypy < Formula
     sha256 cellar: :any_skip_relocation, x86_64_linux:   "3f084ee2e800be5d526f0a88000f56e1ae82af32bc513e9acea047901288ee3e"
   end
 
-  depends_on "python@3.11"
+  depends_on "python@3.12"
 
   resource "mypy-extensions" do
     url "https://files.pythonhosted.org/packages/98/a4/1ab47638b92648243faf97a5aeb6ea83059cc3624972ab6b8d2316078d3f/mypy_extensions-1.0.0.tar.gz"
