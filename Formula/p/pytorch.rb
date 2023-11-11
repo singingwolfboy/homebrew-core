@@ -7,6 +7,7 @@ class Pytorch < Formula
       tag:      "v2.1.0",
       revision: "7bcf7da3a268b435777fe87c7794c382f444e86d"
   license "BSD-3-Clause"
+  revision 1
 
   livecheck do
     url :stable
@@ -25,7 +26,9 @@ class Pytorch < Formula
 
   depends_on "cmake" => :build
   depends_on "ninja" => :build
+  depends_on "python-setuptools" => :build
   depends_on "python@3.11" => [:build, :test]
+  depends_on "python@3.12" => [:build, :test]
   depends_on xcode: :build
   depends_on "eigen"
   depends_on "libuv"
@@ -61,56 +64,64 @@ class Pytorch < Formula
     sha256 "de346335408f84de0eada6ff9fafafff9bcda11f0a0dfaa931133debb146ab61"
   end
 
-  resource "opt-einsum" do
-    url "https://files.pythonhosted.org/packages/7d/bf/9257e53a0e7715bc1127e15063e831f076723c6cd60985333a1c18878fb8/opt_einsum-3.3.0.tar.gz"
-    sha256 "59f6475f77bbc37dcf7cd748519c0ec60722e91e63ca114e68821c0c54a46549"
-  end
-
   resource "sympy" do
     url "https://files.pythonhosted.org/packages/e5/57/3485a1a3dff51bfd691962768b14310dae452431754bfc091250be50dd29/sympy-1.12.tar.gz"
     sha256 "ebf595c8dac3e0fdc4152c51878b498396ec7f30e7a914d6071e674d49420fb8"
   end
 
+  def pythons
+    deps.map(&:to_formula).sort_by(&:version).filter { |f| f.name.start_with?("python@") }
+  end
+
   def install
-    python_exe = Formula["python@3.11"].opt_libexec/"bin/python"
-    args = %W[
-      -GNinja
-      -DBLAS=OpenBLAS
-      -DBUILD_CUSTOM_PROTOBUF=OFF
-      -DBUILD_PYTHON=ON
-      -DCMAKE_CXX_COMPILER=#{ENV.cxx}
-      -DCMAKE_C_COMPILER=#{ENV.cc}
-      -DPYTHON_EXECUTABLE=#{python_exe}
-      -DUSE_CUDA=OFF
-      -DUSE_DISTRIBUTED=ON
-      -DUSE_METAL=OFF
-      -DUSE_MKLDNN=OFF
-      -DUSE_NNPACK=OFF
-      -DUSE_OPENMP=ON
-      -DUSE_SYSTEM_EIGEN_INSTALL=ON
-      -DUSE_SYSTEM_PYBIND11=ON
-    ]
-    args << "-DUSE_MPS=ON" if OS.mac?
+    pythons.each do |python|
+      python_exe = python.opt_libexec/"bin/python"
+      pyversion = Language::Python.major_minor_version(python_exe)
 
-    ENV["LDFLAGS"] = "-L#{buildpath}/build/lib"
+      venv = virtualenv_create(libexec/pyversion, python_exe)
+      venv.pip_install resources
 
-    # Update references to shared libraries
-    inreplace "torch/__init__.py" do |s|
-      s.sub!(/here = os.path.abspath\(__file__\)/, "here = \"#{lib}\"")
-      s.sub!(/get_file_path\('torch', 'bin', 'torch_shm_manager'\)/, "\"#{bin}/torch_shm_manager\"")
+      venv_exe = libexec/pyversion/"bin/python"
+      args = %W[
+        -GNinja
+        -DBLAS=OpenBLAS
+        -DBUILD_CUSTOM_PROTOBUF=OFF
+        -DBUILD_PYTHON=ON
+        -DCMAKE_CXX_COMPILER=#{ENV.cxx}
+        -DCMAKE_C_COMPILER=#{ENV.cc}
+        -DPYTHON_EXECUTABLE=#{venv_exe}
+        -DUSE_CUDA=OFF
+        -DUSE_DISTRIBUTED=ON
+        -DUSE_METAL=OFF
+        -DUSE_MKLDNN=OFF
+        -DUSE_NNPACK=OFF
+        -DUSE_OPENMP=ON
+        -DUSE_SYSTEM_EIGEN_INSTALL=ON
+        -DUSE_SYSTEM_PYBIND11=ON
+      ]
+      args << "-DUSE_MPS=ON" if OS.mac?
+
+      ENV["LDFLAGS"] = "-L#{buildpath}/build/lib"
+
+      # Update references to shared libraries
+      inreplace "torch/__init__.py" do |s|
+        s.sub!(/here = os.path.abspath\(__file__\)/, "here = \"#{lib}\"")
+        s.sub!(/get_file_path\('torch', 'bin', 'torch_shm_manager'\)/, "\"#{bin}/torch_shm_manager-#{pyversion}\"")
+      end
+
+      inreplace "torch/utils/cpp_extension.py", "_TORCH_PATH = os.path.dirname(os.path.dirname(_HERE))",
+                                                "_TORCH_PATH = \"#{opt_prefix}\""
+
+      system "cmake", "-B", "build", "-S", ".", *std_cmake_args, *args
+
+      # Avoid references to Homebrew shims
+      inreplace "build/caffe2/core/macros.h", Superenv.shims_path/ENV.cxx, ENV.cxx
+
+      venv.pip_install_and_link(buildpath, build_isolation: false)
+
+      bin.install bin/"torchrun" => "torchrun-#{pyversion}"
+      bin.install bin/"torch_shm_manager" => "torch_shm_manager-#{pyversion}"
     end
-
-    inreplace "torch/utils/cpp_extension.py", "_TORCH_PATH = os.path.dirname(os.path.dirname(_HERE))",
-                                              "_TORCH_PATH = \"#{opt_prefix}\""
-
-    system "cmake", "-B", "build", "-S", ".", *std_cmake_args, *args
-
-    # Avoid references to Homebrew shims
-    inreplace "build/caffe2/core/macros.h", Superenv.shims_path/ENV.cxx, ENV.cxx
-
-    venv = virtualenv_create(libexec, "python3.11")
-    venv.pip_install resources
-    venv.pip_install_and_link(buildpath, build_isolation: false)
   end
 
   test do
@@ -130,16 +141,21 @@ class Pytorch < Formula
     system "./test"
 
     # test that the `torch` Python module is available
-    system libexec/"bin/python", "-c", <<~EOS
-      import torch
-      t = torch.rand(5, 3)
-      assert isinstance(t, torch.Tensor), "not a tensor"
-      assert torch.distributed.is_available(), "torch.distributed is unavailable"
-    EOS
+    pythons.each do |python|
+      python_exe = python.opt_libexec/"bin/python"
+      pyversion = Language::Python.major_minor_version(python_exe)
 
-    if OS.mac?
+      system libexec/pyversion/"bin/python", "-c", <<~EOS
+        import torch
+        t = torch.rand(5, 3)
+        assert isinstance(t, torch.Tensor), "not a tensor"
+        assert torch.distributed.is_available(), "torch.distributed is unavailable"
+      EOS
+
+      next unless OS.mac?
+
       # test that we have the MPS backend
-      system libexec/"bin/python", "-c", <<~EOS
+      system libexec/pyversion/"bin/python", "-c", <<~EOS
         import torch
         assert torch.backends.mps.is_built(), "MPS backend is not built"
       EOS
