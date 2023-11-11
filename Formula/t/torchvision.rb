@@ -6,6 +6,7 @@ class Torchvision < Formula
   url "https://github.com/pytorch/vision/archive/refs/tags/v0.16.0.tar.gz"
   sha256 "79b30b082237e3ead21e74587cedf4a4d832f977cf7dfeccfb65f67988b12ceb"
   license "BSD-3-Clause"
+  revision 1
 
   livecheck do
     url :stable
@@ -25,6 +26,7 @@ class Torchvision < Formula
   depends_on "cmake" => :build
   depends_on "ninja" => :build
   depends_on "python@3.11" => [:build, :test]
+  depends_on "python@3.12" => [:build, :test]
   depends_on "jpeg-turbo"
   depends_on "libpng"
   depends_on "numpy"
@@ -57,6 +59,10 @@ class Torchvision < Formula
     sha256 "b19e1a85d206b56d7df1d5e683df4a7725252a964e3993648dd0fb5a1c157564"
   end
 
+  def pythons
+    deps.map(&:to_formula).sort_by(&:version).filter { |f| f.name.start_with?("python@") }
+  end
+
   def install
     system "cmake", "-S", ".", "-B", "build", *std_cmake_args
     system "cmake", "--build", "build"
@@ -67,19 +73,23 @@ class Torchvision < Formula
       "(jpeg_found, jpeg_conda, jpeg_include, jpeg_lib) = find_library(\"jpeglib\", vision_include)",
       "(jpeg_found, jpeg_conda, jpeg_include, jpeg_lib) = (True, False, \"#{jpeg.include}\", \"#{jpeg.lib}\")"
 
-    python3 = "python3.11"
-    venv = virtualenv_create(libexec, python3)
-    venv.pip_install resources
+    pythons.each do |python|
+      python_exe = python.opt_libexec/"bin/python"
+      pyversion = Language::Python.major_minor_version(python_exe)
 
-    # We depend on pytorch, but that's a separate formula, so install a `.pth` file to link them.
-    # This needs to happen _before_ we try to install torchvision.
-    site_packages = Language::Python.site_packages(python3)
-    pytorch = Formula["pytorch"].opt_libexec
-    (libexec/site_packages/"homebrew-pytorch.pth").write pytorch/site_packages
+      venv = virtualenv_create(libexec/pyversion, python_exe)
+      venv.pip_install resources
 
-    venv.pip_install_and_link(buildpath, build_isolation: false)
+      # We depend on pytorch, but that's a separate formula, so install a `.pth` file to link them.
+      # This needs to happen _before_ we try to install torchvision.
+      site_packages = Language::Python.site_packages(python_exe)
+      pytorch = Formula["pytorch"].opt_libexec
+      (libexec/site_packages/"homebrew-pytorch.pth").write pytorch/pyversion/site_packages
 
-    pkgshare.install "examples"
+      venv.pip_install_and_link(buildpath, build_isolation: false)
+
+      pkgshare.install "examples"
+    end
   end
 
   test do
@@ -118,11 +128,17 @@ class Torchvision < Formula
 
     # test that the `torchvision` Python module is available
     cp test_fixtures("test.png"), "test.png"
-    system libexec/"bin/python", "-c", <<~EOS
-      import torch
-      import torchvision
-      t = torchvision.io.read_image("test.png")
-      assert isinstance(t, torch.Tensor)
-    EOS
+
+    pythons.each do |python|
+      python_exe = python.opt_libexec/"bin/python"
+      pyversion = Language::Python.major_minor_version(python_exe)
+
+      system libexec/"bin/python#{pyversion}", "-c", <<~EOS
+        import torch
+        import torchvision
+        t = torchvision.io.read_image("test.png")
+        assert isinstance(t, torch.Tensor)
+      EOS
+    end
   end
 end
