@@ -25,7 +25,9 @@ class Pytorch < Formula
 
   depends_on "cmake" => :build
   depends_on "ninja" => :build
+  depends_on "python-setuptools" => :build
   depends_on "python@3.11" => [:build, :test]
+  depends_on "python@3.12" => [:build, :test]
   depends_on xcode: :build
   depends_on "eigen"
   depends_on "libuv"
@@ -34,6 +36,10 @@ class Pytorch < Formula
   depends_on "openblas"
   depends_on "protobuf"
   depends_on "pybind11"
+  depends_on "python-filelock"
+  depends_on "python-jinja"
+  depends_on "python-networkx"
+  depends_on "python-sympy"
   depends_on "python-typing-extensions"
   depends_on "pyyaml"
 
@@ -41,58 +47,15 @@ class Pytorch < Formula
     depends_on "libomp"
   end
 
-  resource "filelock" do
-    url "https://files.pythonhosted.org/packages/d5/71/bb1326535231229dd69a9dd2e338f6f54b2d57bd88fc4a52285c0ab8a5f6/filelock-3.12.4.tar.gz"
-    sha256 "2e6f249f1f3654291606e046b09f1fd5eac39b360664c27f5aad072012f8bcbd"
-  end
-
-  resource "Jinja2" do
-    url "https://files.pythonhosted.org/packages/7a/ff/75c28576a1d900e87eb6335b063fab47a8ef3c8b4d88524c4bf78f670cce/Jinja2-3.1.2.tar.gz"
-    sha256 "31351a702a408a9e7595a8fc6150fc3f43bb6bf7e319770cbc0db9df9437e852"
-  end
-
-  resource "mpmath" do
-    url "https://files.pythonhosted.org/packages/e0/47/dd32fa426cc72114383ac549964eecb20ecfd886d1e5ccf5340b55b02f57/mpmath-1.3.0.tar.gz"
-    sha256 "7a28eb2a9774d00c7bc92411c19a89209d5da7c4c9a9e227be8330a23a25b91f"
-  end
-
-  resource "networkx" do
-    url "https://files.pythonhosted.org/packages/fd/a1/47b974da1a73f063c158a1f4cc33ed0abf7c04f98a19050e80c533c31f0c/networkx-3.1.tar.gz"
-    sha256 "de346335408f84de0eada6ff9fafafff9bcda11f0a0dfaa931133debb146ab61"
-  end
-
-  resource "opt-einsum" do
-    url "https://files.pythonhosted.org/packages/7d/bf/9257e53a0e7715bc1127e15063e831f076723c6cd60985333a1c18878fb8/opt_einsum-3.3.0.tar.gz"
-    sha256 "59f6475f77bbc37dcf7cd748519c0ec60722e91e63ca114e68821c0c54a46549"
-  end
-
-  resource "sympy" do
-    url "https://files.pythonhosted.org/packages/e5/57/3485a1a3dff51bfd691962768b14310dae452431754bfc091250be50dd29/sympy-1.12.tar.gz"
-    sha256 "ebf595c8dac3e0fdc4152c51878b498396ec7f30e7a914d6071e674d49420fb8"
+  def pythons
+    deps.select { |dep| dep.name.start_with?("python@") }
+        .map(&:to_formula)
+        .sort_by(&:version)
   end
 
   def install
-    python_exe = Formula["python@3.11"].opt_libexec/"bin/python"
-    args = %W[
-      -GNinja
-      -DBLAS=OpenBLAS
-      -DBUILD_CUSTOM_PROTOBUF=OFF
-      -DBUILD_PYTHON=ON
-      -DCMAKE_CXX_COMPILER=#{ENV.cxx}
-      -DCMAKE_C_COMPILER=#{ENV.cc}
-      -DPYTHON_EXECUTABLE=#{python_exe}
-      -DUSE_CUDA=OFF
-      -DUSE_DISTRIBUTED=ON
-      -DUSE_METAL=OFF
-      -DUSE_MKLDNN=OFF
-      -DUSE_NNPACK=OFF
-      -DUSE_OPENMP=ON
-      -DUSE_SYSTEM_EIGEN_INSTALL=ON
-      -DUSE_SYSTEM_PYBIND11=ON
-    ]
-    args << "-DUSE_MPS=ON" if OS.mac?
-
-    ENV["LDFLAGS"] = "-L#{buildpath}/build/lib"
+    # workaround for Xcode 14.3
+    ENV.append "CFLAGS", "-Wno-implicit-function-declaration" if DevelopmentTools.clang_build_version >= 1403
 
     # Update references to shared libraries
     inreplace "torch/__init__.py" do |s|
@@ -103,14 +66,40 @@ class Pytorch < Formula
     inreplace "torch/utils/cpp_extension.py", "_TORCH_PATH = os.path.dirname(os.path.dirname(_HERE))",
                                               "_TORCH_PATH = \"#{opt_prefix}\""
 
-    system "cmake", "-B", "build", "-S", ".", *std_cmake_args, *args
+    ENV["LDFLAGS"] = "-L#{buildpath}/build/lib"
 
-    # Avoid references to Homebrew shims
-    inreplace "build/caffe2/core/macros.h", Superenv.shims_path/ENV.cxx, ENV.cxx
+    pythons.each do |python|
+      python_exe = python.opt_libexec/"bin/python"
+      args = %W[
+        -GNinja
+        -DBLAS=OpenBLAS
+        -DBUILD_CUSTOM_PROTOBUF=OFF
+        -DBUILD_PYTHON=ON
+        -DCMAKE_CXX_COMPILER=#{ENV.cxx}
+        -DCMAKE_C_COMPILER=#{ENV.cc}
+        -DPYTHON_EXECUTABLE=#{python_exe}
+        -DUSE_CUDA=OFF
+        -DUSE_DISTRIBUTED=ON
+        -DUSE_METAL=OFF
+        -DUSE_MKLDNN=OFF
+        -DUSE_NNPACK=OFF
+        -DUSE_OPENMP=ON
+        -DUSE_SYSTEM_EIGEN_INSTALL=ON
+        -DUSE_SYSTEM_PYBIND11=ON
+      ]
+      args << "-DUSE_MPS=ON" if OS.mac?
 
-    venv = virtualenv_create(libexec, "python3.11")
-    venv.pip_install resources
-    venv.pip_install_and_link(buildpath, build_isolation: false)
+      rm_rf "build" # remove prior build, if it exists
+      system "cmake", "-B", "build", "-S", ".", *std_cmake_args, *args
+
+      # Avoid references to Homebrew shims
+      inreplace "build/caffe2/core/macros.h", Superenv.shims_path/ENV.cxx, ENV.cxx
+
+      system python_exe, "-m", "pip", "install", *std_pip_args, "."
+
+      pyversion = Language::Python.major_minor_version(python_exe)
+      bin.install bin/"torchrun" => "torchrun-#{pyversion}"
+    end
   end
 
   test do
@@ -130,16 +119,19 @@ class Pytorch < Formula
     system "./test"
 
     # test that the `torch` Python module is available
-    system libexec/"bin/python", "-c", <<~EOS
-      import torch
-      t = torch.rand(5, 3)
-      assert isinstance(t, torch.Tensor), "not a tensor"
-      assert torch.distributed.is_available(), "torch.distributed is unavailable"
-    EOS
+    pythons.each do |python|
+      python_exe = python.opt_libexec/"bin/python"
+      system python_exe, "-c", <<~EOS
+        import torch
+        t = torch.rand(5, 3)
+        assert isinstance(t, torch.Tensor), "not a tensor"
+        assert torch.distributed.is_available(), "torch.distributed is unavailable"
+      EOS
 
-    if OS.mac?
+      next unless OS.mac?
+
       # test that we have the MPS backend
-      system libexec/"bin/python", "-c", <<~EOS
+      system python_exe, "-c", <<~EOS
         import torch
         assert torch.backends.mps.is_built(), "MPS backend is not built"
       EOS
