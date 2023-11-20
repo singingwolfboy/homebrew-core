@@ -614,7 +614,10 @@
     "exclude_packages": ["click", "Pygments", "six", "tabulate"]
   },
   "llm": {
-    "exclude_packages": ["certifi", "Pygments", "PyYAML", "six", "tabulate", "typing-extensions"]
+    "exclude_packages": [
+      "click", "certifi", "pluggy", "Pygments", "python-dateutil", "PyYAML",
+      "six", "tabulate", "typing-extensions"
+    ]
   },
   "localstack": {
     "exclude_packages": [
