@@ -32,7 +32,8 @@ class Binwalk < Formula
   depends_on "numpy"
   depends_on "p7zip"
   depends_on "pillow"
-  depends_on "python@3.11"
+  depends_on "python-matplotlib"
+  depends_on "python@3.12"
   depends_on "six"
   depends_on "ssdeep"
   depends_on "xz"
@@ -45,11 +46,6 @@ class Binwalk < Formula
   resource "gnupg" do
     url "https://files.pythonhosted.org/packages/96/6c/21f99b450d2f0821ff35343b9a7843b71e98de35192454606435c72991a8/gnupg-2.3.1.tar.gz"
     sha256 "8db5a05c369dbc231dab4c98515ce828f2dffdc14f1534441a6c59b71c6d2031"
-  end
-
-  resource "matplotlib" do
-    url "https://files.pythonhosted.org/packages/23/6d/2917ed23b17a8c4d1d59974a574cae0a365c392ba8820c8824b03a02f376/matplotlib-3.6.3.tar.gz"
-    sha256 "1f4d69707b1677560cd952544ee4962f68ff07952fb9069ff8c12b56353cb8c9"
   end
 
   resource "pycryptodome" do
