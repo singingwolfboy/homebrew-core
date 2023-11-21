@@ -24,6 +24,8 @@ class Opencv < Formula
   depends_on "cmake" => :build
   depends_on "pkg-config" => :build
   depends_on "python-setuptools" => :build
+  depends_on "python@3.11" => [:build, :test]
+  depends_on "python@3.12" => [:build, :test]
   depends_on "ceres-solver"
   depends_on "eigen"
   depends_on "ffmpeg"
@@ -38,7 +40,6 @@ class Opencv < Formula
   depends_on "openjpeg"
   depends_on "openvino"
   depends_on "protobuf"
-  depends_on "python@3.12"
   depends_on "tbb"
   depends_on "vtk"
   depends_on "webp"
@@ -59,8 +60,8 @@ class Opencv < Formula
     sha256 "efdf5534479af2e246c162215d5cbc2ae49e962ca58ccd9fef610fa40ee4a4ed"
   end
 
-  def python3
-    "python3.12"
+  def pythons
+    deps.map(&:to_formula).sort_by(&:version).filter { |f| f.name.start_with?("python@") }
   end
 
   def install
@@ -113,7 +114,7 @@ class Opencv < Formula
       -DWITH_VTK=ON
       -DBUILD_opencv_python2=OFF
       -DBUILD_opencv_python3=ON
-      -DPYTHON3_EXECUTABLE=#{which(python3)}
+      -DPYTHON3_EXECUTABLE=#{which("python3.12")}
     ]
 
     args += [
@@ -144,6 +145,11 @@ class Opencv < Formula
       args += %W[-DCPU_BASELINE=#{cpu_baseline} -DCPU_BASELINE_REQUIRE=#{cpu_baseline}]
     end
 
+    system("cmake", "-S", ".", "-B", "build_py11", *args, *std_cmake_args,
+           "-DPYTHON3_EXECUTABLE=#{which("python3.11")}")
+    system "cmake", "--build", "build_py11"
+    system "cmake", "--install", "build_py11"
+
     system "cmake", "-S", ".", "-B", "build_shared", *args, *std_cmake_args
     inreplace "build_shared/modules/core/version_string.inc", "#{Superenv.shims_path}/", ""
     system "cmake", "--build", "build_shared"
@@ -170,7 +176,10 @@ class Opencv < Formula
     system ENV.cxx, "-std=c++11", "test.cpp", "-I#{include}/opencv4", "-o", "test"
     assert_equal shell_output("./test").strip, version.to_s
 
-    output = shell_output("#{python3} -c 'import cv2; print(cv2.__version__)'")
-    assert_equal version.to_s, output.chomp
+    pythons.each do |python|
+      python_exe = python.opt_libexec/"bin/python"
+      output = shell_output("#{python_exe} -c 'import cv2; print(cv2.__version__)'")
+      assert_equal version.to_s, output.chomp
+    end
   end
 end
