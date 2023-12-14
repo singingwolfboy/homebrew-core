@@ -600,7 +600,9 @@
     "exclude_packages": ["packaging", "PyYAML", "six", "tabulate", "toml"]
   },
   "jrnl": {
-    "exclude_packages": ["cffi", "cryptography", "keyring", "pygments", "six"]
+    "exclude_packages": [
+      "cffi", "cryptography", "keyring", "pygments", "python-dateutil", "six"
+  ]
   },
   "juju-wait": {
     "exclude_packages": ["PyYAML"]
