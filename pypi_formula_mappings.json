@@ -136,7 +136,8 @@
   },
   "b2-tools": {
     "exclude_packages": [
-      "argcomplete", "certifi", "docutils", "six", "tabulate", "typing-extensions"
+      "argcomplete", "docutils", "packaging", "platformdirs", "python-dateutil",
+      "requests", "six", "tabulate", "typing-extensions", "urllib3"
     ]
   },
   "badkeys": {
