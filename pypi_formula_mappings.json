@@ -158,7 +158,10 @@
     ]
   },
   "beancount": {
-    "exclude_packages": ["certifi", "lxml", "packaging", "pyparsing", "six"]
+    "exclude_packages": [
+      "cachetools", "chardet", "lxml", "packaging", "pluggy", "ply", "pyparsing",
+      "python-dateutil", "python-magic", "requests", "six", "urllib3"
+    ]
   },
   "bilix": {
     "exclude_packages": ["certifi", "typing-extensions", "Pygments"]
